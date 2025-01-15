@@ -1,22 +1,27 @@
 package com.deyvidsalvatore.crediary.mscards.application;
 
 import com.deyvidsalvatore.crediary.mscards.application.representation.request.CardRequest;
+import com.deyvidsalvatore.crediary.mscards.application.representation.response.CustomerCardResponse;
 import com.deyvidsalvatore.crediary.mscards.domain.Card;
+import com.deyvidsalvatore.crediary.mscards.domain.CustomerCard;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("cards")
 public class CardResource {
 
     private final CardService cardService;
+    private final CustomerCardService customerCardService;
 
-    public CardResource(CardService cardService) {
+    public CardResource(CardService cardService, CustomerCardService customerCardService) {
         this.cardService = cardService;
+        this.customerCardService = customerCardService;
     }
 
     @GetMapping
@@ -32,6 +37,24 @@ public class CardResource {
                 .buildAndExpand(request.getIncome())
                 .toUri();
         return ResponseEntity.created(headerLocation).body(this.cardService.save(request));
+    }
+
+    @GetMapping(params = "income")
+    public ResponseEntity<?> getCardsByIncome(@RequestParam("income") Long income) {
+        var result = this.cardService.getCardsByIncomeLessThan(income);
+        if (result.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping(params = "ssn")
+    public ResponseEntity<?> getCardsByCustomer(@RequestParam("ssn") String ssn) {
+        List<CustomerCardResponse> resultList = this.customerCardService.getCardsBySsn(ssn)
+                .stream()
+                .map(CustomerCardResponse::fromModel)
+                .toList();
+        return ResponseEntity.ok(resultList);
     }
 
 }
