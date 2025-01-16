@@ -3,6 +3,9 @@ package com.deyvidsalvatore.crediary.mscreditappraiser.application;
 import com.deyvidsalvatore.crediary.mscreditappraiser.domain.appraisal.AppraisalCustomerStatus;
 import com.deyvidsalvatore.crediary.mscreditappraiser.domain.appraisal.AppraisalData;
 import com.deyvidsalvatore.crediary.mscreditappraiser.domain.customer.CustomerSituation;
+import com.deyvidsalvatore.crediary.mscreditappraiser.domain.template.ProtocolCardRequest;
+import com.deyvidsalvatore.crediary.mscreditappraiser.domain.template.RequestCardEmissionData;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +35,17 @@ public class CreditAppraiserResource {
         return ResponseEntity.ok(
                 this.creditAppraiserService.makeAvaliation(appraisal.getSsn(), appraisal.getIncome())
         );
+    }
+
+    @PostMapping("request-card")
+    public ResponseEntity<ProtocolCardRequest> requestCard(@RequestBody RequestCardEmissionData data) {
+        try {
+            return ResponseEntity.ok(
+                    this.creditAppraiserService.requestCardEmission(data)
+            );
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

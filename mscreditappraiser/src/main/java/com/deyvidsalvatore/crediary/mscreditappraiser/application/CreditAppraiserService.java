@@ -8,8 +8,12 @@ import com.deyvidsalvatore.crediary.mscreditappraiser.domain.appraisal.Card;
 import com.deyvidsalvatore.crediary.mscreditappraiser.domain.customer.CustomerCard;
 import com.deyvidsalvatore.crediary.mscreditappraiser.domain.customer.CustomerData;
 import com.deyvidsalvatore.crediary.mscreditappraiser.domain.customer.CustomerSituation;
+import com.deyvidsalvatore.crediary.mscreditappraiser.domain.template.ProtocolCardRequest;
+import com.deyvidsalvatore.crediary.mscreditappraiser.domain.template.RequestCardEmissionData;
 import com.deyvidsalvatore.crediary.mscreditappraiser.infra.clients.CardsResourceClient;
 import com.deyvidsalvatore.crediary.mscreditappraiser.infra.clients.CustomerResourceClient;
+import com.deyvidsalvatore.crediary.mscreditappraiser.infra.mqueue.RequestEmissionCardPublisher;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,16 +23,19 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 public class CreditAppraiserService {
 
     private final CustomerResourceClient customerClient;
     private final CardsResourceClient cardsClient;
+    private final RequestEmissionCardPublisher requestEmissionCardPublisher;
 
-    public CreditAppraiserService(CustomerResourceClient customerClient, CardsResourceClient cardsClient) {
+    public CreditAppraiserService(CustomerResourceClient customerClient, CardsResourceClient cardsClient, RequestEmissionCardPublisher requestEmissionCardPublisher) {
         this.customerClient = customerClient;
         this.cardsClient = cardsClient;
+        this.requestEmissionCardPublisher = requestEmissionCardPublisher;
     }
 
     public CustomerSituation getCustomerSituation(String ssn) {
@@ -37,13 +44,11 @@ public class CreditAppraiserService {
             ResponseEntity<List<CustomerCard>> cardsResponse = this.cardsClient.getCardsByCustomer(ssn);
             return CustomerSituation.builder()
                     .customer(customerDataResponse.getBody())
-                    .cards(Objects.requireNonNull(cardsResponse.getBody()).isEmpty() ? cardsResponse.getBody() : null)
+                    .cards(cardsResponse.getBody())
                     .build();
-        } catch (FeignException.FeignClientException e) {
-            if (HttpStatus.NOT_FOUND.value() == e.status()) {
-                throw new CustomerDataNotFoundException();
-            }
-            throw new CommunicationMicroserviceError(e.getMessage(), e.status());
+        }  catch (FeignException.FeignClientException e) {
+            handleFeignException(e);
+            return null;
         }
     }
 
@@ -65,6 +70,19 @@ public class CreditAppraiserService {
         } catch (FeignException.FeignClientException e) {
             handleFeignException(e);
             return null;
+        }
+    }
+
+    public ProtocolCardRequest requestCardEmission(RequestCardEmissionData data) throws JsonProcessingException {
+        try {
+            this.requestEmissionCardPublisher.requestCard(data);
+            var protocol = UUID.randomUUID().toString();
+            return new ProtocolCardRequest(protocol);
+        } catch (FeignException.FeignClientException e) {
+            handleFeignException(e);
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException();
         }
     }
 
