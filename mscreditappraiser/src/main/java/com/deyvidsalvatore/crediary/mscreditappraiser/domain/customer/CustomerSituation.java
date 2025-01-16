@@ -1,4 +1,4 @@
-package com.deyvidsalvatore.crediary.mscreditappraiser.domain;
+package com.deyvidsalvatore.crediary.mscreditappraiser.domain.customer;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
 package com.deyvidsalvatore.crediary.mscreditappraiser.infra.clients;
 
-import com.deyvidsalvatore.crediary.mscreditappraiser.domain.CustomerData;
+import com.deyvidsalvatore.crediary.mscreditappraiser.domain.customer.CustomerData;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

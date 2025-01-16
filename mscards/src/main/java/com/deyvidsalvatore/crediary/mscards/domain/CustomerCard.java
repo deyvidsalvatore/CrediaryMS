@@ -22,5 +22,6 @@ public class CustomerCard implements Serializable {
     @JoinColumn(name = "card_id")
     private Card card;
 
+    @Column(name = "card_limit")
     private BigDecimal limit;
 }

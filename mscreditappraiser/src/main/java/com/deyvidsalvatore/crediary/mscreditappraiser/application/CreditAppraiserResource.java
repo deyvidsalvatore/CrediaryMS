@@ -1,11 +1,10 @@
 package com.deyvidsalvatore.crediary.mscreditappraiser.application;
 
-import com.deyvidsalvatore.crediary.mscreditappraiser.domain.CustomerSituation;
+import com.deyvidsalvatore.crediary.mscreditappraiser.domain.appraisal.AppraisalCustomerStatus;
+import com.deyvidsalvatore.crediary.mscreditappraiser.domain.appraisal.AppraisalData;
+import com.deyvidsalvatore.crediary.mscreditappraiser.domain.customer.CustomerSituation;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("credit-appraiser")
@@ -27,4 +26,12 @@ public class CreditAppraiserResource {
         CustomerSituation customerSituation = this.creditAppraiserService.getCustomerSituation(ssn);
         return ResponseEntity.ok(customerSituation);
     }
+
+    @PostMapping
+    public ResponseEntity<AppraisalCustomerStatus> appraise(@RequestBody AppraisalData appraisal) {
+        return ResponseEntity.ok(
+                this.creditAppraiserService.makeAvaliation(appraisal.getSsn(), appraisal.getIncome())
+        );
+    }
+
 }
