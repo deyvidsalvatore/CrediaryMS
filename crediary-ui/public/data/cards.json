@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "VisaVisitorVI",
+    "brand": "VISA",
+    "income": 3000,
+    "basicLimit": 3500
+  },
+  {
+    "id": 2,
+    "name": "Hipercard",
+    "brand": "Mastercard",
+    "income": 3000,
+    "basicLimit": 3500
+  },
+  {
+    "id": 3,
+    "name": "GoldCard",
+    "brand": "VISA",
+    "income": 4500,
+    "basicLimit": 5000
+  },
+  {
+    "id": 4,
+    "name": "PlatinumEdge",
+    "brand": "American Express",
+    "income": 6000,
+    "basicLimit": 7500
+  },
+  {
+    "id": 5,
+    "name": "SilverCharge",
+    "brand": "Discover",
+    "income": 3500,
+    "basicLimit": 4000
+  }
+]

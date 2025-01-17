@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "name": "Lola Lombardi",
+    "age": 20
+  },
+  {
+    "id": 2,
+    "name": "James Peterson",
+    "age": 35
+  },
+  {
+    "id": 3,
+    "name": "Sarah Johnson",
+    "age": 28
+  },
+  {
+    "id": 4,
+    "name": "Michael Davis",
+    "age": 42
+  },
+  {
+    "id": 5,
+    "name": "Emily Clark",
+    "age": 30
+  }
+]
