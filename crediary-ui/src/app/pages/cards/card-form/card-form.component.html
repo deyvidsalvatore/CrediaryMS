@@ -1,1 +1,79 @@
-<p>card-form works!</p>
+<form [formGroup]="cardForm" (ngSubmit)="onSubmit()">
+  <div class="container mt-5">
+    <div class="card shadow-lg p-4">
+      <h3 class="card-title text-center mb-4">Card Information</h3>
+
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input
+          type="text"
+          id="name"
+          class="form-control"
+          formControlName="name"
+          placeholder="Enter your name"
+        />
+        @if(cardForm.get('name')?.invalid && cardForm.get('name')?.touched) {
+        <div class="text-danger">Name is required.</div>
+        }
+      </div>
+
+      <div class="mb-3">
+        <label for="brand" class="form-label">Brand</label>
+        <select id="brand" class="form-control" formControlName="brand">
+          <option value="">Select Brand</option>
+          @for (brand of cardBrands; track $index) {
+          <option [value]="brand">{{ brand }}</option>
+          }
+        </select>
+        @if(cardForm.get('brand')?.invalid && cardForm.get('brand')?.touched) {
+        <div class="text-danger">Brand is required.</div>
+        }
+      </div>
+
+      <div class="mb-3">
+        <label for="income" class="form-label">Income</label>
+        <input
+          type="number"
+          id="income"
+          class="form-control"
+          formControlName="income"
+          placeholder="Enter your income"
+        />
+        @if(cardForm.get('income')?.invalid && cardForm.get('income')?.touched)
+        {
+        <div class="text-danger">
+          Income is required and must be a valid number.
+        </div>
+        }
+      </div>
+
+      <div class="mb-3">
+        <label for="basicLimit" class="form-label">Basic Limit</label>
+        <input
+          type="number"
+          id="basicLimit"
+          class="form-control"
+          formControlName="basicLimit"
+          placeholder="Enter basic limit"
+        />
+        @if(cardForm.get('basicLimit')?.invalid &&
+        cardForm.get('basicLimit')?.touched) {
+        <div class="text-danger">
+          Basic Limit is required and must be a valid number.
+        </div>
+        }
+      </div>
+
+      <div class="d-flex justify-content-between gap-2">
+        <button
+          type="submit"
+          class="btn btn-primary w-50"
+          [disabled]="cardForm.invalid"
+        >
+          Submit
+        </button>
+        <a routerLink="/cards" class="btn btn-secondary w-50 link">Cancel</a>
+      </div>
+    </div>
+  </div>
+</form>
