@@ -1,1 +1,65 @@
-<p>customer-form works!</p>
+<form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+  <div class="container mt-5">
+    <div class="card shadow-lg p-4">
+      <h3 class="card-title text-center mb-4">Customer Information</h3>
+
+      <div class="mb-3">
+        <label for="name" class="form-label">SSN</label>
+        <input
+          type="text"
+          id="name"
+          class="form-control"
+          formControlName="ssn"
+          placeholder="Enter your SSN"
+        />
+        @if(customerForm.get('ssn')?.invalid && customerForm.get('ssn')?.touched) {
+        <div class="text-danger">SSN is required.</div>
+        }
+      </div>
+
+
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input
+          type="text"
+          id="name"
+          class="form-control"
+          formControlName="name"
+          placeholder="Enter your name"
+        />
+        @if(customerForm.get('name')?.invalid && customerForm.get('name')?.touched) {
+        <div class="text-danger">Name is required.</div>
+        }
+      </div>
+
+
+      <div class="mb-3">
+        <label for="income" class="form-label">Age</label>
+        <input
+          type="number"
+          id="income"
+          class="form-control"
+          formControlName="age"
+          placeholder="Enter your age"
+        />
+        @if(customerForm.get('age')?.invalid && customerForm.get('age')?.touched)
+        {
+        <div class="text-danger">
+          Age is required and must be a valid number.
+        </div>
+        }
+      </div>
+
+      <div class="d-flex justify-content-between gap-2">
+        <button
+          type="submit"
+          class="btn btn-primary w-50"
+          [disabled]="customerForm.invalid"
+        >
+          Submit
+        </button>
+        <a routerLink="/cards" class="btn btn-secondary w-50 link" routerLink="/customers">Cancel</a>
+      </div>
+    </div>
+  </div>
+</form>

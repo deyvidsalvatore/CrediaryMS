@@ -1,30 +1,19 @@
 import { Injectable } from "@angular/core";
-import { Card } from "../../../shared/interfaces/Card";
+import { Customer } from "../../../shared/interfaces/Customer";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { catchError, Observable, take, throwError } from "rxjs";
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-} from "@angular/common/http";
 
 @Injectable({
   providedIn: "root",
 })
-export class CardService {
-  private readonly baseUrl = "data/cards.json";
+export class CustomerService {
+  private readonly _baseUrl = "/data/customers.json";
 
   constructor(private http: HttpClient) {}
 
-  getCards(): Observable<Card[]> {
+  getAllCustomers(): Observable<Customer[]> {
     return this.http
-      .get<Card[]>(this.baseUrl)
-      .pipe(take(1), catchError(this.handleError));
-  }
-
-  getCardsByIncome(income: number): Observable<Card[]> {
-    const params = new HttpParams().set("income", income);
-    return this.http
-      .get<Card[]>(this.baseUrl, { params: params })
+      .get<Customer[]>(this._baseUrl)
       .pipe(take(1), catchError(this.handleError));
   }
 

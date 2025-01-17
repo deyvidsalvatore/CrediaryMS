@@ -1,1 +1,24 @@
-<p>customer-list works!</p>
+<div class="container mt-5">
+  <h2>Customer List</h2>
+  <button class="btn btn-primary mb-3 rounded-5">
+    <a class="link" routerLink="new"><i class="bi-plus-lg me-2"></i>Add Customer</a>
+  </button>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Age</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (customer of customers(); track customer.id) {
+      <tr>
+        <td>{{ customer.id }}</td>
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.age }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

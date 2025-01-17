@@ -2,14 +2,14 @@
   <div class="d-flex justify-content-end mb-3">
     <button class="btn btn-primary rounded-5">
       <a routerLink="new" class="link">
-        <i class="bi bi-plus"></i>
+        <i class="bi-plus-lg me-2"></i>
         <span>Add New Card</span>
       </a>
     </button>
   </div>
 
   <div class="row g-3 justify-content-center">
-    @for(card of cards; track $index) {
+    @for(card of cards(); track $index) {
       <div class="col-12 col-sm-4 col-md-4">
         <div class="h-100 shadow-sm rounded">
           <app-credit-card [card]="card"></app-credit-card>
