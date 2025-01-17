@@ -9,7 +9,7 @@
   {
     "id": 2,
     "name": "Hipercard",
-    "brand": "Mastercard",
+    "brand": "MASTERCARD",
     "income": 3000,
     "basicLimit": 3500
   },
@@ -23,14 +23,14 @@
   {
     "id": 4,
     "name": "PlatinumEdge",
-    "brand": "American Express",
+    "brand": "AMERICANEXPRESS",
     "income": 6000,
     "basicLimit": 7500
   },
   {
     "id": 5,
     "name": "SilverCharge",
-    "brand": "Discover",
+    "brand": "DISCOVER",
     "income": 3500,
     "basicLimit": 4000
   }

@@ -1,0 +1,24 @@
+<div [ngClass]="getCardClass()" class="card credit-card shadow-sm">
+  <div class="card-body">
+    <div class="d-flex justify-content-between">
+      <div>
+        <h5 class="card-title">{{ card.brand }} Credit Card</h5>
+        <p class="card-text text-muted">{{ card.name }}</p>
+      </div>
+      <div class="text-end">
+        <h6 class="text-uppercase">{{ card.brand }}</h6>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-3">
+      <div>
+        <p class="mb-1">Income: ${{ card.income }}</p>
+        <p class="mb-1">Basic Limit: ${{ card.basicLimit }}</p>
+      </div>
+      <div>
+        <p class="text-end mb-1">•••• •••• •••• 1234</p>
+        <p class="text-end mb-1">Expiry: 12/25</p>
+      </div>
+    </div>
+  </div>
+</div>

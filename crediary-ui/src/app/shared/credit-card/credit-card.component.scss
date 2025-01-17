@@ -1,0 +1,48 @@
+.credit-card {
+  width: 300px;
+  height: 180px;
+  border-radius: 15px;
+  color: white;
+  padding: 15px;
+}
+
+.visa {
+  background: linear-gradient(45deg, #3b72f7, #a0c4ff) !important;
+}
+
+.mastercard {
+  background: linear-gradient(45deg, #ff5f00, #f1c232) !important;
+}
+
+.americanexpress {
+  background: linear-gradient(45deg, #0069b5, #a8d1e7) !important;
+}
+
+.discover {
+  background: linear-gradient(45deg, #ff6600, #ffa500) !important;
+}
+
+.card-title {
+  font-size: 1.2rem;
+}
+
+.card-text {
+  font-size: 0.9rem;
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.card-footer {
+  background-color: #f7f7f7;
+}
+
+.card-footer p {
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+.text-end {
+  text-align: right;
+}
