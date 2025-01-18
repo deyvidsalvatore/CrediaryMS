@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./shared/header/header.component";
 import { FooterComponent } from "./shared/footer/footer.component";
+import { AuthService } from './shared/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,24 @@ import { FooterComponent } from "./shared/footer/footer.component";
   `,
   styles: [],
 })
-export class AppComponent {
-  title = 'crediary-ui';
+export class AppComponent implements OnInit {
+  private authService = inject(AuthService);
+
+  ngOnInit(): void {
+
+    const storedToken = this.authService.getStoredToken();
+
+    if (storedToken) {
+      console.log('Already has a token');
+    } else {
+      this.authService.getAccessToken().subscribe({
+        next: () => {
+          console.log('Setting a new token');
+        },
+        error: (error) => {
+          console.error('Error getting access token:', error);
+        }
+      })
+    }
+  }
 }
